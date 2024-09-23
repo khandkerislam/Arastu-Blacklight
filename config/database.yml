@@ -80,6 +80,5 @@ test:
 #
 production:
   <<: *default
-  database: seattle_library_production
-  username: seattle_library
-  password: <%= ENV["SEATTLE_LIBRARY_DATABASE_PASSWORD"] %>
+  url: <%= ENV.fetch("PROD_DB_URL") %>
+  sslmode: "require"

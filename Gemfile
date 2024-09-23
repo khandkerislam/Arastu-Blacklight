@@ -73,7 +73,7 @@ gem "devise"
 gem "devise-guests", "~> 0.8"
 gem "blacklight-marc", "~> 8.0"
 gem "soda-ruby", "~> 0.2.15"
-gem "dotenv-rails", groups: [ :development, :test ]
+gem "dotenv-rails", groups: [ :development, :test, :production ]
 
 gem "sidekiq", "~> 7.3"
 
