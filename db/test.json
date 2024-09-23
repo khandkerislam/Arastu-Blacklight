@@ -1,0 +1,17 @@
+[
+    {
+        "bibnum": "1987324",
+        "title": "Man we Testin",
+        "author": "Islam, Khandker",
+        "isbn": ["30", "35"],
+        "publicationyear": "[2022]",
+        "publisher": "Penguin Random House",
+        "subjects": ["Climatic Changes", "Theoretical Physics"],
+        "itemtype": "ebook",
+        "itemcollection": "scifi",
+        "floatingitem": "NA",
+        "itemlocation": "bkl",
+        "reportdate": "2023-03-15T00:00:00.000",
+        "itemcount": "3"
+    }
+]

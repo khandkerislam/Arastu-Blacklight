@@ -1,0 +1,12 @@
+services:
+  solr:
+    image: solr
+    ports:
+     - "8983:8983"
+    volumes:
+      - data:/var/solr
+    command:
+      - solr-precreate
+      - blacklight-core
+volumes:
+  data:
