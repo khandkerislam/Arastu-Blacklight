@@ -13,9 +13,9 @@ RSpec.describe Book, type: :model do
     it { should have_many(:subjects).through(:book_subjects) }
   end
 
-  describe 'after_save callback' do
-    it 'calls index_in_solr after saving' do
-      expect(book).to receive(:index_in_solr)
+  describe 'after_save callback'  do
+    it 'calls index_in_solr after saving', :focus do
+      expect(book).to receive(:index_in_solr).and_call_original
 
       book.save
 
