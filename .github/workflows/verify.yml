@@ -39,7 +39,7 @@ jobs:
           POSTGRES_DB: seattle_library_test
           POSTGRES_PASSWORD: ""
         ports: ["5432:5432"]
-    ENV:
+    env:
       RAILS_ENV: test
     steps:
       - name: Checkout code
