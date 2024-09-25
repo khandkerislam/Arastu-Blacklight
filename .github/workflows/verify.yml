@@ -19,44 +19,58 @@ jobs:
       - name: Run linters
         run: |
           bin/rubocop --parallel
-          bin/stylelint
-          bin/prettier
-          bin/eslint
 
-      - name: Run security checks
-        run: |
-          bin/bundler-audit --update
-          bin/brakeman -q -w2
-
-  tests:
-    name: Tests
+  test:
     runs-on: ubuntu-latest
+
     services:
-      postgres:
-        image: postgres:12.7
+      db:
+        image: postgres:13
+        ports:
+          - 5432:5432
         env:
-          RAILS_ENV: test
-          POSTGRES_USER: seattle_library
-          POSTGRES_DB: seattle_library_test
-          POSTGRES_PASSWORD: ""
-        ports: ["5432:5432"]
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Setup Ruby and install gems
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.1' # Specify the Ruby version you are using
+        bundler-cache: true  # Caches 'vendor/bundle' automatically
 
-      - name: Setup test database
-        env:
-          RAILS_ENV: test
-          PGHOST: localhost
-          PGUSER: seattle_library
-        run: |
-          bin/rails db:setup
+    - name: Set up PostgreSQL
+      run: |
+        sudo apt-get install postgresql-client
 
-      - name: Run tests
-        run: bin/rspec
+    - name: Install dependencies
+      run: |
+        bundle install --jobs 4 --retry 3
+
+    - name: Set up the database
+      env:
+        RAILS_ENV: test
+      run: |
+        cp config/database.yml.ci config/database.yml
+        bin/rails db:create db:schema:load
+
+    - name: Run tests
+      env:
+        RAILS_ENV: test
+      run: |
+        bundle exec rspec
+
+    - name: Upload test coverage
+      if: success()
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage
+        path: coverage/

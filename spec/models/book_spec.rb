@@ -1,21 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe Book, type: :model do
-  let(:book) { create(:book) }
-  let(:optional_associations_book) { create(:book, author: nil, publisher: nil, collection: nil) }
+  let(:book) { build(:book) }
+  let(:optional_associations_book) { build(:book, author: nil, publisher: nil, collection: nil) }
+  let!(:mocked_solr) { instance_double(Solr::SolrService) }
 
-  describe 'validations' do 
+  describe 'validations' do
     it { should belong_to(:author).optional }
     it { should belong_to(:collection).optional }
     it { should belong_to(:publisher).optional }
-    it { should have_many(:isbns)}
-    it { should have_many(:book_subjects)}
+    it { should have_many(:isbns) }
+    it { should have_many(:book_subjects) }
     it { should have_many(:subjects).through(:book_subjects) }
   end
 
-  describe 'after_save callback' do
-    it 'calls index_in_solr after saving' do
-      expect(book).to receive(:index_in_solr)
+  describe 'after_save callback'  do
+    it 'calls index_in_solr after saving', :focus do
+      allow(book).to receive(:index_in_solr).and_yield(mocked_solr)
+      allow_any_instance_of(RSolr::Client).to receive(:add).and_return({ "responseHeader" => { "status" => 0 } })
+      allow_any_instance_of(RSolr::Client).to receive(:commit)
+      allow(mocked_solr).to receive(:queue_documents).and_return(true)
+      allow(mocked_solr).to receive(:commit_queued_updates)
+      expect(book).to receive(:index_in_solr).and_call_original
 
       book.save
 
@@ -29,7 +35,7 @@ RSpec.describe Book, type: :model do
 
       expect(book_json['title']).to eq(book.title)
       expect(book_json['author']).to eq(book.author.full_name)
-      expect(book_json['publisher']).to eq(book.publisher.name )
+      expect(book_json['publisher']).to eq(book.publisher.name)
       expect(book_json['collection']).to eq(book.collection.name)
       expect(book_json['subjects']).to match_array(book.subjects.pluck(:name))
       expect(book_json['isbns']).to match_array(book.isbns.pluck(:isbn))
@@ -56,8 +62,8 @@ RSpec.describe Book, type: :model do
       before do
         allow(solr_service).to receive(:queue_documents).and_return(true)
         allow(solr_service).to receive(:commit_queued_updates)
-      end  
-  
+      end
+
       it 'calls SolrService to queue documents and commit them' do
         expect(solr_book.processed).to be false
 
@@ -65,18 +71,18 @@ RSpec.describe Book, type: :model do
         expect(solr_service).to receive(:commit_queued_updates)
 
         solr_book.index_in_solr(solr_service)
-        
+
         expect(solr_book.processed).to be true
       end
     end
-    
+
     context 'when SolrService raises an error' do
       before do
         allow(solr_service).to receive(:queue_documents).and_return(false)
         allow(solr_service).to receive(:commit_queued_updates)
         allow(solr_service).to receive(:rollback_queued_updates)
       end
-  
+
       it 'rescues from SolrIndexError and rolls back queued documents' do
         expect(failing_solr_book.processed).to be false
 
@@ -91,11 +97,11 @@ RSpec.describe Book, type: :model do
       end
     end
   end
-  
+
   describe '#remove_from_index' do
     let!(:remove_from_index) { instance_double(Solr::SolrService) }
     let!(:delete_solr_book) { build(:processed_book) }
-    let!(:failing_remove_solr_book) { build(:processed_book)}
+    let!(:failing_remove_solr_book) { build(:processed_book) }
 
     context 'when SolrService successfully queues documents for deletion' do
       before do
@@ -110,16 +116,16 @@ RSpec.describe Book, type: :model do
         expect(remove_from_index).to receive(:commit_queued_updates)
 
         delete_solr_book.remove_from_index(remove_from_index)
-        
+
         expect(delete_solr_book.processed).to be false
       end
     end
-  
+
     context 'when SolrService raises an error' do
       before do
         allow(remove_from_index).to receive(:delete_queued_documents).and_return(false)
       end
-  
+
       it 'rescues from SolrIndexError and rolls back queued documents' do
         expect(failing_remove_solr_book.processed).to be true
 

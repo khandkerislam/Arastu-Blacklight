@@ -2,7 +2,6 @@ class SolrIndexJob
   include Sidekiq::Job
 
   def perform(book_ids)
-
     books = Book.where(id: book_ids)
     return if books.empty?
 

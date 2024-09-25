@@ -11,7 +11,7 @@ RSpec.describe Solr::SolrService do
   end
 
   describe '#queue_documents' do
-    let(:documents) { [{ id: '123', title: 'Test Book' }] }
+    let(:documents) { [ { id: '123', title: 'Test Book' } ] }
     let(:success_response) { { "responseHeader" => { "status" => 0 } } }
     let(:failure_response) { { "responseHeader" => { "status" => 1 } } }
 
@@ -41,7 +41,7 @@ RSpec.describe Solr::SolrService do
   end
 
   describe '#delete_queued_documents' do
-    let(:document_ids) { ['123', '456'] }
+    let(:document_ids) { [ '123', '456' ] }
     let(:success_response) { { "responseHeader" => { "status" => 0 } } }
     let(:failure_response) { { "responseHeader" => { "status" => 1 } } }
 

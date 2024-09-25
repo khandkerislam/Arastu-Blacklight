@@ -20,23 +20,23 @@ class Book < ApplicationRecord
     book_json
   end
 
-  def index_in_solr(solr=Solr::SolrService.new)
+  def index_in_solr(solr = Solr::SolrService.new)
     book_json = self.jsonify
     response = solr.queue_documents(book_json)
     if response
       solr.commit_queued_updates
-      self.processed = true
+      self.write_attribute(:processed, true)
     else
       solr.rollback_queued_updates
     end
   end
 
-  def remove_from_index(solr=Solr::SolrService.new)
+  def remove_from_index(solr = Solr::SolrService.new)
     book_json = self.jsonify
     response = solr.delete_queued_documents(book_json)
     if response
       solr.commit_queued_updates
-      self.processed = false
+      self.write_attribute(:processed, false)
     else
       solr.rollback_queued_updates
     end

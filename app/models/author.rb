@@ -10,8 +10,8 @@ class Author < ApplicationRecord
   def split_name
     return if full_name.blank?
 
-    parts = full_name.split(',').map(&:strip)
+    parts = full_name.split(",").map(&:strip)
     self.last_name = parts[0]
-    self.first_name = parts[1] || ''
+    self.first_name = parts[1] || ""
   end
 end

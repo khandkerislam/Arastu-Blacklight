@@ -3,7 +3,7 @@ FactoryBot.define do
   factory :book do
     title { Faker::Book.title }
     processed { false }
-    
+
     association :author, factory: :author
     association :collection, factory: :collection
     association :publisher, factory: :publisher
@@ -14,7 +14,7 @@ FactoryBot.define do
     end
   end
 
-  factory :processed_book, parent: :book do 
+  factory :processed_book, parent: :book do
     processed { true }
   end
 end
