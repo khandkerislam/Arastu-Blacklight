@@ -18,6 +18,7 @@ RSpec.describe Book, type: :model do
     it 'calls index_in_solr after saving', :focus do
       allow(book).to receive(:index_in_solr).and_yield(mocked_solr)
       allow_any_instance_of(RSolr::Client).to receive(:add).and_return({ "responseHeader" => { "status" => 0 } })
+      allow_any_instance_of(RSolr::Client).to receive(:commit)
       allow(mocked_solr).to receive(:queue_documents).and_return(true)
       allow(mocked_solr).to receive(:commit_queued_updates)
       expect(book).to receive(:index_in_solr).and_call_original
