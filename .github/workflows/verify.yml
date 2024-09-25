@@ -36,6 +36,7 @@ jobs:
         image: postgres:12.7
         env:
           RAILS_ENV: test
+          PROD_DB_URL: localhost
           POSTGRES_USER: seattle_library
           POSTGRES_DB: seattle_library_test
           POSTGRES_PASSWORD: ""
@@ -49,9 +50,6 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      
-      - name: Debug Rails environment
-        run: bin/rails runner "puts Rails.env"
 
       - name: Setup test database
         env:
