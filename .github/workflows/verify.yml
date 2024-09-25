@@ -35,6 +35,7 @@ jobs:
       postgres:
         image: postgres:12.7
         env:
+          RAILS_ENV: test
           POSTGRES_USER: seattle_library
           POSTGRES_DB: seattle_library_test
           POSTGRES_PASSWORD: ""
