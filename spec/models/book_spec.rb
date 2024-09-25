@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Book, type: :model do
   let(:book) { build(:book) }
   let(:optional_associations_book) { build(:book, author: nil, publisher: nil, collection: nil) }
+  let!(:mocked_solr) { instance_double(Solr::SolrService) }
 
   describe 'validations' do
     it { should belong_to(:author).optional }
@@ -15,6 +16,9 @@ RSpec.describe Book, type: :model do
 
   describe 'after_save callback'  do
     it 'calls index_in_solr after saving', :focus do
+      allow(book).to receive(:index_in_solr).and_yield(mocked_solr)
+      allow(mocked_solr).to receive(:queue_documents).and_return(true)
+      allow(mocked_solr).to receive(:commit_queued_updates)
       expect(book).to receive(:index_in_solr).and_call_original
 
       book.save
