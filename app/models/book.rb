@@ -20,7 +20,7 @@ class Book < ApplicationRecord
     book_json
   end
 
-  def index_in_solr(solr=Solr::SolrService.new)
+  def index_in_solr(solr = Solr::SolrService.new)
     book_json = self.jsonify
     response = solr.queue_documents(book_json)
     if response
@@ -31,7 +31,7 @@ class Book < ApplicationRecord
     end
   end
 
-  def remove_from_index(solr=Solr::SolrService.new)
+  def remove_from_index(solr = Solr::SolrService.new)
     book_json = self.jsonify
     response = solr.delete_queued_documents(book_json)
     if response

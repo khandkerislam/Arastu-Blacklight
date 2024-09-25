@@ -1,11 +1,11 @@
-require 'sidekiq/web'
+require "sidekiq/web"
 
 Rails.application.routes.draw do
   concern :marc_viewable, Blacklight::Marc::Routes::MarcViewable.new
   devise_for :users
   mount Blacklight::Engine => "/"
 
-  mount Sidekiq::Web => '/sidekiq'
+  mount Sidekiq::Web => "/sidekiq"
   root to: "catalog#index"
   concern :searchable, Blacklight::Routes::Searchable.new
 
