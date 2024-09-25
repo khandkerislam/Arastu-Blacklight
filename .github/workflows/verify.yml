@@ -55,11 +55,11 @@ jobs:
 
       - name: Setup test database
         env:
-          RAILS_ENV: test
+          PROD_DB_URL: localhost
           PGHOST: localhost
           PGUSER: seattle_library
         run: |
-          bin/rails db:setup
+          bin/rails db:setup RAIlS_ENV=test
 
       - name: Run tests
         run: bin/rspec
