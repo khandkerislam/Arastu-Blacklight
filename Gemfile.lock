@@ -142,6 +142,13 @@ GEM
     drb (2.2.1)
     erubi (1.13.0)
     execjs (2.9.1)
+    factory_bot (6.5.0)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.4.3)
+      factory_bot (~> 6.4)
+      railties (>= 5.0.0)
+    faker (3.4.2)
+      i18n (>= 1.8.11, < 2)
     faraday (2.11.0)
       faraday-net_http (>= 2.0, < 3.4)
       logger
@@ -482,6 +489,8 @@ DEPENDENCIES
   devise
   devise-guests (~> 0.8)
   dotenv-rails
+  factory_bot_rails
+  faker
   importmap-rails
   jbuilder
   pg (~> 1.1)

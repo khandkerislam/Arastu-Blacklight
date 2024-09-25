@@ -14,16 +14,16 @@ module Solr
       response = @solr.add(documents)
       handle_response(response)
     rescue SolrIndexError => e
-      rollback_queued_updates
       puts "Could not add documents to Solr Index, #{e.message}"
+      false
     end
 
     def delete_queued_documents(documents)
       response = @solr.delete_by_id documents
       handle_response(response)
     rescue SolrIndexError => e
-      rollback_queued_updates
       puts "Could not delete documents from Solr Index, #{e.message}"
+      false
     end
 
     def commit_queued_updates

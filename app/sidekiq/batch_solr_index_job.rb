@@ -1,16 +1,15 @@
 class BatchSolrIndexJob
   include Sidekiq::Job
 
-  BATCH_SIZE=1000
 
-  def perform
+  def perform(batch_size=1000)
     batch = Sidekiq::Batch.new
     batch.description = "Uploading Books to Solr Index..."
 
     batch.on(:success, BatchSolrIndexJob::Created)
 
     batch.jobs do
-      books = Book.where(processed: false).pluck(:id).in_groups_of(BATCH_SIZE,false)
+      books = Book.where(processed: false).pluck(:id).in_groups_of(batch_size,false)
       books.each do |ids| 
         SolrIndexJob.perform_async(ids)
       end
