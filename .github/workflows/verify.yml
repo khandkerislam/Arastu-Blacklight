@@ -35,13 +35,12 @@ jobs:
       postgres:
         image: postgres:12.7
         env:
-          RAILS_ENV: test
-          PROD_DB_URL: localhost
           POSTGRES_USER: seattle_library
           POSTGRES_DB: seattle_library_test
           POSTGRES_PASSWORD: ""
         ports: ["5432:5432"]
-
+    ENV:
+      RAILS_ENV: test
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
