@@ -49,6 +49,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+      
+      - name: Debug Rails environment
+        run: bin/rails runner "puts Rails.env"
 
       - name: Setup test database
         env:
