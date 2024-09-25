@@ -52,7 +52,6 @@ jobs:
 
       - name: Setup test database
         env:
-          PROD_DB_URL: localhost
           PGHOST: localhost
           PGUSER: seattle_library
         run: |
