@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Book, type: :model do
-  let(:book) { create(:book) }
-  let(:optional_associations_book) { create(:book, author: nil, publisher: nil, collection: nil) }
+  let(:book) { build(:book) }
+  let(:optional_associations_book) { build(:book, author: nil, publisher: nil, collection: nil) }
 
   describe 'validations' do
     it { should belong_to(:author).optional }
@@ -23,29 +23,29 @@ RSpec.describe Book, type: :model do
   #   end
   # end
 
-  # describe '#jsonify' do
-  #   it 'returns the correct JSON structure' do
-  #     book_json = book.jsonify
+  describe '#jsonify' do
+    it 'returns the correct JSON structure' do
+      book_json = book.jsonify
 
-  #     expect(book_json['title']).to eq(book.title)
-  #     expect(book_json['author']).to eq(book.author.full_name)
-  #     expect(book_json['publisher']).to eq(book.publisher.name)
-  #     expect(book_json['collection']).to eq(book.collection.name)
-  #     expect(book_json['subjects']).to match_array(book.subjects.pluck(:name))
-  #     expect(book_json['isbns']).to match_array(book.isbns.pluck(:isbn))
-  #   end
+      expect(book_json['title']).to eq(book.title)
+      expect(book_json['author']).to eq(book.author.full_name)
+      expect(book_json['publisher']).to eq(book.publisher.name)
+      expect(book_json['collection']).to eq(book.collection.name)
+      expect(book_json['subjects']).to match_array(book.subjects.pluck(:name))
+      expect(book_json['isbns']).to match_array(book.isbns.pluck(:isbn))
+    end
 
-  #   it 'returns the correct JSON structure for a book with optional associations' do
-  #     book_json = optional_associations_book.jsonify
+    it 'returns the correct JSON structure for a book with optional associations' do
+      book_json = optional_associations_book.jsonify
 
-  #     expect(book_json['title']).to eq(optional_associations_book.title)
-  #     expect(book_json['author']).to eq("")
-  #     expect(book_json['publisher']).to eq("")
-  #     expect(book_json['collection']).to eq("")
-  #     expect(book_json['subjects']).to match_array(optional_associations_book.subjects.pluck(:name))
-  #     expect(book_json['isbns']).to match_array(optional_associations_book.isbns.pluck(:isbn))
-  #   end
-  # end
+      expect(book_json['title']).to eq(optional_associations_book.title)
+      expect(book_json['author']).to eq("")
+      expect(book_json['publisher']).to eq("")
+      expect(book_json['collection']).to eq("")
+      expect(book_json['subjects']).to match_array(optional_associations_book.subjects.pluck(:name))
+      expect(book_json['isbns']).to match_array(optional_associations_book.isbns.pluck(:isbn))
+    end
+  end
 
   describe '#index_in_solr' do
     let!(:solr_service) { instance_double(Solr::SolrService) }
