@@ -22,26 +22,55 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+
     services:
-      postgres:
-        image: postgres:11-alpine
+      db:
+        image: postgres:13
         ports:
-          - "5432:5432"
+          - 5432:5432
         env:
-          POSTGRES_DB: rails_test
-          POSTGRES_USER: rails
-          POSTGRES_PASSWORD: password
-    env:
-      RAILS_ENV: test
-      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install Ruby and gems
-        uses: ruby/setup-ruby@8f312efe1262fb463d906e9bf040319394c18d3e # v1.92
-        with:
-          bundler-cache: true
-      - name: Set up database schema
-        run: bin/rails db:schema:load
-      - name: Run tests
-        run: bin/rake
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.1' # Specify the Ruby version you are using
+        bundler-cache: true  # Caches 'vendor/bundle' automatically
+
+    - name: Set up PostgreSQL
+      run: |
+        sudo apt-get install postgresql-client
+
+    - name: Install dependencies
+      run: |
+        bundle install --jobs 4 --retry 3
+
+    - name: Set up the database
+      env:
+        RAILS_ENV: test
+      run: |
+        cp config/database.yml.ci config/database.yml
+        bin/rails db:create db:schema:load
+
+    - name: Run tests
+      env:
+        RAILS_ENV: test
+      run: |
+        bin/rails test
+
+    - name: Upload test coverage
+      if: success()
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage
+        path: coverage/
