@@ -32,5 +32,5 @@ sudo chmod -R 777 ./blacklight-core
 - In a separate terminal if needed, apply any pending database migrations with `docker compose exec web rails db:migrate`.
 - Once everything is set up, the app should be accessible at `http://localhost:3000`.
 
-#### 3. Search Example
+#### 4. Search Example
 Try searching for **Jane Austen** to explore the search functionality.
