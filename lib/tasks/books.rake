@@ -13,7 +13,6 @@ namespace :books do
 
     file_contents = File.read("db/collection.json")
     library = JSON.parse(file_contents, symbolize_names: true)
-    active_record_collection = Hash.new { |h, k| h[k] = [] }
 
     author_set = Set.new
     collections_set = Set.new
@@ -94,7 +93,7 @@ namespace :books do
                 end
               end
             end
-            # Handle ISBNs
+
             if entry[:isbn]
               entry[:isbn].split(",").each do |isbn|
                 isbn = isbn.strip
@@ -134,10 +133,4 @@ namespace :books do
   task index_books: :environment do
     BatchSolrIndexJob.perform_async
   end
-  desc "Commit in Solr"
-  task solar_commit: :environment do
-    SolrConnectionJob.perform_async
-  end
-  desc "Get schema"
-  task
 end

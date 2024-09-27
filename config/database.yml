@@ -15,8 +15,10 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
-  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  username: dev_user                   
+  password: dev_password                
+  host: localhost                      
+  port: 5432
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 
@@ -80,5 +82,6 @@ test:
 #
 production:
   <<: *default
+  database: seattle_library_production
   url: <%= ENV.fetch("PROD_DB_URL") %>
   sslmode: "require"
