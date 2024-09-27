@@ -30,7 +30,7 @@ sudo chmod -R 777 ./blacklight-core
 ```
 
 #### 3. Running the Application
-- In a terminal, run `docker compose up` or `docker compose up -d` for a detached terminal. This will start the Redis server, PostgreSQL databases, and Solr index.
+- In a terminal, run `docker compose up` or `docker compose up -d` for a detached terminal. This will start the Rails application, Redis server, PostgreSQL databases, and Solr index.
 - In a separate terminal if needed, apply any pending database migrations with `docker compose exec web rails db:migrate`.
 - Once everything is set up, the app should be accessible at `http://localhost:3000`.
 
