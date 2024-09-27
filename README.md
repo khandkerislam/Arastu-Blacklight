@@ -16,16 +16,12 @@ The local setup includes a preconfigured Solr index with 5,000 books. Follow the
 
 #### Dependencies 
 
-Must have Ruby 3.3.1 and Docker installed on your machine
+Must have Docker installed and running on your machine
 
 #### 1. Environment Setup
 - Rename `.env-copy` to `.env` to ensure proper configuration.
 
-#### Dependencies
-
-Have Docker installed and running
-
-#### 1. Resolving Docker File Permissions (Optional)
+#### 2. Resolving Docker File Permissions (Optional)
 If you encounter file permission issues with Docker, you may need to run the following commands within the project directory:
 
 ```bash
