@@ -8,9 +8,15 @@ This is a sample Blacklight demo using a catalog of 5,000 books from the Seattle
 You can test the live version of the application here:  
 **[Blacklight Demo](https://eltaess-arastu-f9a999eb5bf7.herokuapp.com/)**
 
+
+
 ### Local Setup
 
 The local setup includes a preconfigured Solr index with 5,000 books. Follow the steps below to get the application running locally.
+
+#### Dependencies 
+
+Must have Ruby 3.3.1 and Docker installed on your machine
 
 #### 1. Environment Setup
 - Rename `.env.development` to `.env` to ensure proper configuration.
