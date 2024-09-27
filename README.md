@@ -1,3 +1,4 @@
+
 # Blacklight Demo
 
 This is a sample Blacklight demo using a catalog of 5,000 books from the Seattle Library for search functionality.
@@ -21,3 +22,12 @@ If you encounter file permission issues with Docker, you may need to run the fol
 sudo chown -R 8983:8983 ./blacklight-core
 sudo chmod -R 777 ./blacklight-core
 ```
+
+#### 3. Running the Application
+- In a terminal, run `docker compose up`. This will start the Redis server, PostgreSQL databases, and Solr index.
+- In a separate terminal, run the Rails server with `rails s`.
+- Apply any pending database migrations by running `rails db:migrate`.
+- Once everything is set up, the app should be accessible at `http://localhost:3000`.
+
+#### 4. Search Example
+Try searching for **Jane Austen** to explore the search functionality.
