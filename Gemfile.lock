@@ -163,6 +163,7 @@ GEM
     ffi-compiler (1.3.2)
       ffi (>= 1.15.5)
       rake
+    foreman (0.88.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
@@ -491,6 +492,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
+  foreman
   importmap-rails
   jbuilder
   pg (~> 1.1)

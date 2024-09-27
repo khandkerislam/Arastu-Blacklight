@@ -51,6 +51,8 @@ group :development, :test do
   gem "byebug", platforms: [ :mri, :mingw, :x64_mingw ]
   gem "rspec-rails"
   gem "shoulda-matchers"
+  gem "solr_wrapper", ">= 0.3"
+  gem "foreman"
 end
 
 group :development do
@@ -65,9 +67,6 @@ group :test do
   gem "faker"
 end
 
-group :development, :test do
-  gem "solr_wrapper", ">= 0.3"
-end
 gem "rsolr", ">= 1.0", "< 3"
 gem "bootstrap", "~> 5.3"
 gem "sassc-rails", "~> 2.1"

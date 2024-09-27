@@ -1,7 +1,7 @@
 require "rsolr"
 module Solr
   class SolrService
-    def initialize(endpoint = ENV["FULL_SOLR"], options = {})
+    def initialize(endpoint = SOLR_CONFIG["url"], options = {})
       @solr = RSolr.connect(url: endpoint, **options)
     end
 

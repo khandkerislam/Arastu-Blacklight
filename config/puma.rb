@@ -32,11 +32,3 @@ plugin :tmp_restart
 # Specify the PID file. Defaults to tmp/pids/server.pid in development.
 # In other environments, only set the PID file if requested.
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
-
-if ENV["RAILS_ENV"] == "development"
-  ssl_bind "localhost", "3000", {
-    key: Rails.root.join("config/ssl/key.pem").to_s,
-    cert: Rails.root.join("config/ssl/cert.pem").to_s,
-    verify_mode: "none"
-  }
-end

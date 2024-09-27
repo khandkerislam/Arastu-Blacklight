@@ -10,7 +10,7 @@ module LibraryCollection
     def call(limit = 5000)
       client = SODA::Client.new({ domain: @endpoint, app_token: @token })
 
-      results = client.get(@identifier, :$limit => limit)
+      client.get(@identifier, :$limit => limit)
     end
   end
 end

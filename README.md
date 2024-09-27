@@ -1,24 +1,33 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Blacklight Demo
 
-Things you may want to cover:
+This is a sample Blacklight demo using a catalog of 5,000 books from the Seattle Library for search functionality.
 
-* Ruby version
+### Live Demo
 
-* System dependencies
+You can test the live version of the application here:  
+**[Blacklight Demo](https://eltaess-arastu-f9a999eb5bf7.herokuapp.com/)**
 
-* Configuration
+### Local Setup
 
-* Database creation
+The local setup includes a preconfigured Solr index with 5,000 books. Follow the steps below to get the application running locally.
 
-* Database initialization
+#### 1. Environment Setup
+- Rename `.env.development` to `.env` to ensure proper configuration.
 
-* How to run the test suite
+#### 2. Resolving Docker File Permissions (Optional)
+If you encounter file permission issues with Docker, you may need to run the following commands within the project directory:
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+sudo chown -R 8983:8983 ./blacklight-core
+sudo chmod -R 777 ./blacklight-core
+```
 
-* Deployment instructions
+#### 3. Running the Application
+- In a terminal, run `docker compose up`. This will start the Redis server, PostgreSQL databases, and Solr index.
+- In a separate terminal, run the Rails server with `rails s`.
+- Apply any pending database migrations by running `rails db:migrate`.
+- Once everything is set up, the app should be accessible at `http://localhost:3000`.
 
-* ...
+#### 4. Search Example
+Try searching for **Jane Austen** to explore the search functionality.

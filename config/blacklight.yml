@@ -1,10 +1,15 @@
 load_defaults: 8.3.0
+
 default: &default
   adapter: solr
-  url: <%= ENV['FULL_SOLR'] %>
+  url: <%= ENV['LOCAL_SOLR'] %>
+
 development:
   <<: *default
+
 test: &test
   <<: *default
+
 production:
   <<: *default
+  url: <%= ENV['FULL_SOLR'] %>
