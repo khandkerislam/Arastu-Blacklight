@@ -15,7 +15,11 @@ The local setup includes a preconfigured Solr index with 5,000 books. Follow the
 #### 1. Environment Setup
 - Rename `.env-copy` to `.env` to ensure proper configuration.
 
-#### 2. Resolving Docker File Permissions (Optional)
+#### Dependencies
+
+Have Docker installed and running
+
+#### 1. Resolving Docker File Permissions (Optional)
 If you encounter file permission issues with Docker, you may need to run the following commands within the project directory:
 
 ```bash
@@ -28,5 +32,5 @@ sudo chmod -R 777 ./blacklight-core
 - In a separate terminal if needed, apply any pending database migrations with `docker compose exec web rails db:migrate`.
 - Once everything is set up, the app should be accessible at `http://localhost:3000`.
 
-#### 4. Search Example
+#### 3. Search Example
 Try searching for **Jane Austen** to explore the search functionality.
