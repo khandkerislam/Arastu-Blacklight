@@ -7,8 +7,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
-    env_file:
-      - path: .env.development
+    command: bundle exec rails server -b 0.0.0.0
     depends_on:
       - postgres
       - redis
@@ -20,8 +19,6 @@ services:
      - "8983:8983"
     volumes:
       - ./blacklight-core:/var/solr/data/blacklight-core:rw
-    env_file:
-      - path: .env.development
     command: solr-precreate blacklight-core
   redis:
     image: redis:latest
@@ -45,12 +42,9 @@ services:
     build:
       context: .
       dockerfile: development.Dockerfile
-    command: bundle exec sidekiq
     depends_on:
       - redis
       - postgres
-    environment:
-      - REDIS_URL=redis://redis:6379/0
 volumes:
   redis-data:
   postgres-data:

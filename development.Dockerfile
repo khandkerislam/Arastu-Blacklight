@@ -2,7 +2,7 @@
 FROM ruby:3.3.1
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Install dependencies
 RUN apt-get update && \
@@ -15,11 +15,5 @@ COPY Gemfile Gemfile.lock ./
 # Install gems
 RUN bundle install
 
-# Copy the rest of the application code
-COPY . .
-
 # Expose port 3000 to the outside world
 EXPOSE 3000
-
-# Start the Rails server
-CMD ["rails", "server", "-b", "0.0.0.0"]
