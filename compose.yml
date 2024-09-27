@@ -1,4 +1,18 @@
 services:
+  web:
+    build:
+      context: .
+      dockerfile: development.Dockerfile
+    ports: 
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - path: .env.development
+    depends_on:
+      - postgres
+      - redis
+      - solr
   solr:
     image: solr
     user: "8983:8983"
@@ -6,8 +20,9 @@ services:
      - "8983:8983"
     volumes:
       - ./blacklight-core:/var/solr/data/blacklight-core:rw
+    env_file:
+      - path: .env.development
     command: solr-precreate blacklight-core
-
   redis:
     image: redis:latest
     container_name: redis-server
@@ -26,6 +41,16 @@ services:
       POSTGRES_DB: seattle_library_development
     volumes:
       - postgres-data:/var/lib/postgresql/data
+  sidekiq:
+    build:
+      context: .
+      dockerfile: development.Dockerfile
+    command: bundle exec sidekiq
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      - REDIS_URL=redis://redis:6379/0
 volumes:
   redis-data:
   postgres-data:
