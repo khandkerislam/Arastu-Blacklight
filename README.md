@@ -8,9 +8,15 @@ This is a sample Blacklight demo using a catalog of 5,000 books from the Seattle
 You can test the live version of the application here:  
 **[Blacklight Demo](https://eltaess-arastu-f9a999eb5bf7.herokuapp.com/)**
 
+
+
 ### Local Setup
 
 The local setup includes a preconfigured Solr index with 5,000 books. Follow the steps below to get the application running locally.
+
+#### Dependencies 
+
+Must have Docker installed and running on your machine
 
 #### 1. Environment Setup
 - Rename `.env-copy` to `.env` to ensure proper configuration.
@@ -30,6 +36,8 @@ sudo chmod -R 777 ./blacklight-core
 
 #### 4. Search Example
 Try searching for **Jane Austen** to explore the search functionality.
+
+
 
 ### Starting From Scratch
 
@@ -59,7 +67,9 @@ Run the following rake task `docker compose exec web rake books:download_collect
 
 If you haven't already, make sure you run migrations `docker compose exec web rails db:migrate`
 
-Run the following rake tasks in order to populate the necessary tables.
+Run the following rake tasks **one after the other** in order to populate the necessary tables.
+
+
 The first task will create tables and entries for authors, publishers, subjects and collections
 
 The second task will create books and their associations with subjects and isbns
