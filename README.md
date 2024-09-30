@@ -6,7 +6,7 @@ This is a sample Blacklight demo using a catalog of 5,000 books from the Seattle
 ### Live Demo
 
 You can test the live version of the application here:  
-**[Blacklight Demo](https://eltaess-arastu-f9a999eb5bf7.herokuapp.com/)**
+**[Blacklight Demo](https://arastu-blacklight-5eca0da0b2ae.herokuapp.com/)**
 
 
 
