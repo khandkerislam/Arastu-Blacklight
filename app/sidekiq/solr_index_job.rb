@@ -11,6 +11,6 @@ class SolrIndexJob
       book.jsonify
     end
 
-    solr.commit_queued_documents if solr.queue_documents(solr_docs)
+    solr.commit_queued_updates if solr.queue_documents(solr_docs)
   end
 end
