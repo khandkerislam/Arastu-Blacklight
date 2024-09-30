@@ -13,7 +13,7 @@ You can test the live version of the application here:
 The local setup includes a preconfigured Solr index with 5,000 books. Follow the steps below to get the application running locally.
 
 #### 1. Environment Setup
-- Rename `.env.development` to `.env` to ensure proper configuration.
+- Rename `.env-copy` to `.env` to ensure proper configuration.
 
 #### 2. Resolving Docker File Permissions (Optional)
 If you encounter file permission issues with Docker, you may need to run the following commands within the project directory:
@@ -78,6 +78,11 @@ Start sidekiq with
 `docker compose exec web bundle exec sidekiq`
 
 You can check the status of your jobs at `http:localhost:3000/sidekiq` 
+
+#### Solr Schema 
+
+Changes to the Solr Schema can be made in the `./blacklight-core/conf/managed-schema.xml`
+Changes to the Solr Config can be made in the `./blacklight-core/conf/solrconfig.xml`
 
 #### Run Tests
 
