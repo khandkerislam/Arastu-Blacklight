@@ -81,6 +81,9 @@ docker compose exec web rake books:populate_books
 
 #### Uploading documents to Solr 
 
+> [!NOTE]
+> Trying to upload documents that share IDs with existing documents in the Index will cause an error.
+
 To upload documents to Solr, run the following rake task
 `docker compose exec web rake books:index_books` 
 
