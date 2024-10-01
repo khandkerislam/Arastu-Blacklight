@@ -89,6 +89,8 @@ Start sidekiq with
 
 You can check the status of your jobs at `http:localhost:3000/sidekiq` 
 
+The Solr Dashboard is available at `http://localhost:8983/`
+
 #### Solr Schema 
 
 Changes to the Solr Schema can be made in the `./blacklight-core/conf/managed-schema.xml`
