@@ -67,7 +67,8 @@ Run the following rake task `docker compose exec web rake books:download_collect
 
 If you haven't already, make sure you run migrations `docker compose exec web rails db:migrate`
 
-Run the following rake tasks **one after the other** in order to populate the necessary tables.
+> [!WARNING]
+> Run the following rake tasks **one after the other** in order to populate the necessary tables.
 
 
 The first task will create tables and entries for authors, publishers, subjects and collections
@@ -84,7 +85,6 @@ docker compose exec web rake books:populate_books
 > [!WARNING]
 > Trying to upload documents that share IDs with existing documents in the Index will cause an error.
 > Use the Solr Dashboard at `http://localhost:8983/` to delete all documents that will cause an existing ID error.
-> One possible way is to pass this XML query `<delete><query>*:*</query></delete>` as a Raw XML command in the Documents explorer of the Blacklight Core to delete all documents
 
 To upload documents to Solr, run the following rake task
 `docker compose exec web rake books:index_books` 
