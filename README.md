@@ -83,7 +83,8 @@ docker compose exec web rake books:populate_books
 
 > [!WARNING]
 > Trying to upload documents that share IDs with existing documents in the Index will cause an error.
-> Make sure to delete all documents that will cause an existing ID error.
+> Use the Solr Dashboard at `http://localhost:8983/` to delete all documents that will cause an existing ID error.
+> One possible way is to pass this XML query `<delete><query>*:*</query></delete>` as a Raw XML command in the Documents explorer of the Blacklight Core to delete all documents
 
 To upload documents to Solr, run the following rake task
 `docker compose exec web rake books:index_books` 
