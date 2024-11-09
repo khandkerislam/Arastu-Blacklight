@@ -13,6 +13,19 @@ class CatalogController < ApplicationController
   # rescue_from Blacklight::Exceptions::InvalidRequest, with: :my_handling_method
 
   configure_blacklight do |config|
+    config.raw_endpoint.enabled = true  # Enable JSON API
+    
+    # # Disable UI features
+    # config.enable_bookmarks = false     # Disable bookmark functionality
+    # config.enable_search_bar = false    # Disable default search bar
+    # config.show.document_actions = {}   # Disable document action buttons
+    # config.show.tools = {}             # Disable tools menu
+    # config.index.document_actions = {}  # Disable index view actions
+    
+    # # Clear out partials
+    # config.index.partials = []         # No index view partials
+    # config.show.partials = []          # No show view partials
+    
     # Solr URL endpoint (already configured in blacklight.yml)
     config.default_solr_params = {
       qt: "search",
@@ -74,5 +87,14 @@ class CatalogController < ApplicationController
     # config.add_sort_field 'score desc, publicationyear desc', label: 'Relevance'
     # config.add_sort_field 'publicationyear desc', label: 'Newest First'
     # config.add_sort_field 'publicationyear asc', label: 'Oldest First'
+
+    config.add_field_configuration_to_solr_request!
+  end
+
+  def index
+    (@response, @documents) = search_service.search_results
+    respond_to do |format|
+      format.json { render json: { response: { docs: @documents } } }
+    end
   end
 end

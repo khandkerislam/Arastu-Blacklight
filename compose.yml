@@ -7,7 +7,19 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
-    command: bash -c "rm -f /usr/src/app/tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
+    command: bash -c "chmod +x bin/* && rm -f /usr/src/app/tmp/pids/server.pid && yarn && bundle && ./bin/dev"
+    depends_on:
+      - postgres
+      - redis
+      - solr
+  test:
+    build:
+      context: .
+      dockerfile: development.Dockerfile
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - RAILS_ENV=test
     depends_on:
       - postgres
       - redis
@@ -37,7 +49,7 @@ services:
       POSTGRES_PASSWORD: dev_password
       POSTGRES_DB: seattle_library_development
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - seattle_library_postgres_data:/var/lib/postgresql/data
   sidekiq:
     build:
       context: .
@@ -47,4 +59,4 @@ services:
       - postgres
 volumes:
   redis-data:
-  postgres-data:
+  seattle_library_postgres_data:

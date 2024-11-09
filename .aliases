@@ -1,0 +1,2 @@
+alias arastu="docker compose exec web"
+alias arastutest="docker compose run --rm test"

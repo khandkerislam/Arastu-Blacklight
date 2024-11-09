@@ -84,3 +84,5 @@ gem "sidekiq-batch", "~> 0.2.0"
 gem "activerecord-import", "~> 1.8"
 
 gem "pry-byebug", "~> 3.10"
+
+gem "jsbundling-rails", "~> 1.3"
