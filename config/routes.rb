@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   mount Blacklight::Engine => "/"
 
   mount Sidekiq::Web => "/sidekiq"
-  root to: "catalog#index"
+  root to: "home#index"
   concern :searchable, Blacklight::Routes::Searchable.new
 
   resource :catalog, only: [ :index ], as: "catalog", path: "/catalog", controller: "catalog" do
