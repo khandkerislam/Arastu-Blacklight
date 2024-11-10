@@ -5,7 +5,7 @@ class CatalogController < ApplicationController
   include Blacklight::Catalog
   include Blacklight::Marc::Catalog
 
-
+  layout false
   # If you'd like to handle errors returned by Solr in a certain way,
   # you can use Rails rescue_from with a method you define in this controller,
   # uncomment:
@@ -34,8 +34,10 @@ class CatalogController < ApplicationController
     }
 
     # Solr field configuration for search results/index view
+    
     config.index.title_field = "title"
     config.index.display_type_field = "format"
+
 
     # Solr field configuration for document/show view
     config.show.title_field = "title"

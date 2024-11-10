@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  def index
-  end
+    layout "react"
+    def index
+    end
 end
-  
