@@ -86,3 +86,5 @@ gem "activerecord-import", "~> 1.8"
 gem "pry-byebug", "~> 3.10"
 
 gem "jsbundling-rails", "~> 1.3"
+
+gem "pundit", "~> 2.4"

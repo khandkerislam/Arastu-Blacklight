@@ -1,29 +1,35 @@
 services:
-  web:
+  app-base:
     build:
       context: .
       dockerfile: development.Dockerfile
-    ports: 
-      - "3000:3000"
     volumes:
       - .:/usr/src/app
+  web:
+    extends: 
+      service: app-base
+    ports: 
+      - "3000:3000"
     command: bash -c "chmod +x bin/* && rm -f /usr/src/app/tmp/pids/server.pid && yarn && bundle && ./bin/dev"
     depends_on:
       - postgres
       - redis
       - solr
   test:
-    build:
-      context: .
-      dockerfile: development.Dockerfile
-    volumes:
-      - .:/usr/src/app
+    extends: 
+      service: app-base
     environment:
       - RAILS_ENV=test
     depends_on:
       - postgres
       - redis
       - solr
+  storybook:
+    extends:
+      service: app-base
+    ports:
+      - "6006:6006"
+    command: npm run storybook
   solr:
     image: solr
     user: "8983:8983"
@@ -51,9 +57,8 @@ services:
     volumes:
       - seattle_library_postgres_data:/var/lib/postgresql/data
   sidekiq:
-    build:
-      context: .
-      dockerfile: development.Dockerfile
+    extends: 
+      service: app-base
     depends_on:
       - redis
       - postgres

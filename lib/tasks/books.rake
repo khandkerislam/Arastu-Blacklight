@@ -56,6 +56,7 @@ namespace :books do
 
     Subject.import subjects
   end
+  
   desc "Populate database with Books, ISBNS and BookSubjects for the first time"
   task populate_books: :environment do
     require "activerecord-import"
@@ -117,6 +118,7 @@ namespace :books do
       end
     end
   end
+
   desc "Delete all books from the database"
   task delete_books: :environment do
     ActiveRecord::Base.transaction do

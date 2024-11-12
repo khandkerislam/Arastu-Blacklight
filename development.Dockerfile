@@ -41,6 +41,6 @@ ENV RAILS_ENV="${RAILS_ENV}" \
 
 COPY --chown=ruby:ruby . .
 
-EXPOSE 3000
+EXPOSE 3000 6006
 
 CMD ["bash"]

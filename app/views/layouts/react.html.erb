@@ -12,6 +12,11 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", defer: true %>
   </head>
+  <body>
+    <div id="react-root">
+      <%= yield %>
+    </div>
+  </body>
 </html>

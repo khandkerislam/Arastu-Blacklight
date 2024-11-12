@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   resource :catalog, only: [:index], controller: 'catalog' do
     concerns :searchable
   end
+
+  get '*path', to: 'home#index', constraints: ->(request) do
+    !request.xhr? && request.format.html?
+  end
   
   get "up" => "rails/health#show", as: :rails_health_check
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker

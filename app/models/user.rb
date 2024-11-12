@@ -6,6 +6,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  # enum role: %i[:patron, :librarian]
+
   # Configuration added by Blacklight; Blacklight::User uses a method key on your
   # user class to get a user-displayable login/identifier for
   # the account.
